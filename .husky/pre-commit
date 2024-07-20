@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Rodar phpstan
+./vendor/bin/phpstan
+if [ $? -ne 0 ]
+then
+    echo "Opa! Deu ruim em algum arquivo ao rodar a análise sintática! Arrume antes de continua."
+    exit 1
+fi
+
+# Formatar cada arquivo alterado usando pint
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".php\{0,1\}$")
+echo "passei"
+for FILE in $STAGED_FILES
+do
+    ./vendor/bin/pint "${FILE}"
+    git add "${FILE}"
+done
