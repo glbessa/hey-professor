@@ -3,11 +3,11 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Rule as ContractRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\{Auth, RateLimiter};
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Rule as ContractRule;
 
 class LoginRequest extends FormRequest
 {
