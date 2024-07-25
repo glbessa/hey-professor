@@ -36,3 +36,17 @@ it('should be able to unlike a question', function () {
         'unlike'      => 1,
     ]);
 });
+
+it('should not be able to like more than 1 time', function () {
+    $user     = User::factory()->create();
+    $question = Question::factory()->create();
+
+    actingAs($user);
+
+    put(route('question.like', $question));
+    put(route('question.like', $question));
+    put(route('question.like', $question));
+    put(route('question.like', $question));
+
+    expect($user->votes)->toHaveCount(1);
+});

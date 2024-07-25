@@ -59,21 +59,23 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function like(Question $question): void
     {
-        Vote::query()->create([
+        Vote::query()->updateOrCreate([
             'question_id' => $question->id,
-            'user_id'     => $this->id,
-            'like'        => 1,
-            'unlike'      => 0,
+        ], [
+            'user_id' => $this->id,
+            'like'    => 1,
+            'unlike'  => 0,
         ]);
     }
 
     public function unlike(Question $question): void
     {
-        Vote::query()->create([
+        Vote::query()->updateOrCreate([
             'question_id' => $question->id,
-            'user_id'     => $this->id,
-            'like'        => 0,
-            'unlike'      => 1,
+        ], [
+            'user_id' => $this->id,
+            'like'    => 0,
+            'unlike'  => 1,
         ]);
     }
 }
