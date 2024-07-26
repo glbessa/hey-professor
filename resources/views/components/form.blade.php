@@ -5,7 +5,7 @@
     'delete' => null,    
 ])
 
-<form action="{{ $action }}" method="post">
+<form action="{{ $action }}" method="post" {{ $attributes }}>
     @if($put)
         @method('PUT')
     @endif
