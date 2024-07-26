@@ -51,7 +51,7 @@ it('should create a draft all the time', function () {
 
     actingAs($user);
 
-    $response = post(route('question.store'), [
+    post(route('question.store'), [
         'question' => str_repeat('*', 20) . '?',
     ]);
 
