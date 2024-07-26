@@ -14,6 +14,10 @@ class Question extends Model
     protected $guarded = [];
     //protected $fillable = ['question'];
 
+    protected $casts = [
+        "draft" => "boolean",
+    ];
+
     public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
