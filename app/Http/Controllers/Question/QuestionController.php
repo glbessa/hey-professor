@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Question;
 
+use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Closure;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\{RedirectResponse, Request};
 
 class QuestionController extends Controller
