@@ -11,5 +11,17 @@
             <x-buttons.primary>Save</x-buttons.primary>
             <x-buttons.reset>Reset</x-buttons.reset>
         </x-form>
+
+        <hr class="border-gray-700 border-dashed my-4"/>
+
+        {{-- listagem --}}
+        <div>List of questions</div>
+        
+        <div>
+            @foreach($questions as $q)
+                <x-question :question="$q">
+                </x-question>
+            @endforeach
+        </div>
     </x-container>
 </x-app-layout>
