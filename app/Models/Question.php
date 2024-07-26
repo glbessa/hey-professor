@@ -19,13 +19,14 @@ class Question extends Model
         return $this->hasMany(Vote::class);
     }
 
-    public function likes(): Attribute
-    {
-        return new Attribute(fn () => $this->votes()->sum('like'));
-    }
+    // Lazy loading -> bad
+    // public function likes(): Attribute
+    // {
+    //     return new Attribute(fn () => $this->votes()->sum('like'));
+    // }
 
-    public function unlikes(): Attribute
-    {
-        return new Attribute(fn () => $this->votes()->sum('unlike'));
-    }
+    // public function unlikes(): Attribute
+    // {
+    //     return new Attribute(fn () => $this->votes()->sum('unlike'));
+    // }
 }
