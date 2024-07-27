@@ -60,3 +60,9 @@ it('should create a draft all the time', function () {
         'draft'    => true,
     ]);
 });
+
+test('only authenticated users can create a question', function () {
+    post(route('question.store'), [
+        'question' => str_repeat('*', 20) . '?',
+    ])->assertRedirect(route('login'));
+});
