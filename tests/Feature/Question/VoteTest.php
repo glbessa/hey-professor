@@ -10,7 +10,7 @@ it('should be able to like a question', function () {
 
     actingAs($user);
 
-    put(route('question.like', $question))->assertRedirect();
+    put(route('questions.like', $question))->assertRedirect();
 
     assertDatabaseHas('votes', [
         'question_id' => $question->id,
@@ -27,7 +27,7 @@ it('should be able to unlike a question', function () {
 
     actingAs($user);
 
-    put(route('question.unlike', $question))->assertRedirect();
+    put(route('questions.unlike', $question))->assertRedirect();
 
     assertDatabaseHas('votes', [
         'question_id' => $question->id,
@@ -43,10 +43,10 @@ it('should not be able to like more than 1 time', function () {
 
     actingAs($user);
 
-    put(route('question.like', $question));
-    put(route('question.like', $question));
-    put(route('question.like', $question));
-    put(route('question.like', $question));
+    put(route('questions.like', $question));
+    put(route('questions.like', $question));
+    put(route('questions.like', $question));
+    put(route('questions.like', $question));
 
     expect($user->votes)->toHaveCount(1);
 });
@@ -57,10 +57,10 @@ it('should not be able to unlike more than 1 time', function () {
 
     actingAs($user);
 
-    put(route('question.unlike', $question));
-    put(route('question.unlike', $question));
-    put(route('question.unlike', $question));
-    put(route('question.unlike', $question));
+    put(route('questions.unlike', $question));
+    put(route('questions.unlike', $question));
+    put(route('questions.unlike', $question));
+    put(route('questions.unlike', $question));
 
     expect($user->votes)->toHaveCount(1);
 });

@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
 use Closure;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\{RedirectResponse, Request};
 
 class QuestionController extends Controller
 {
+    public function index(): View
+    {
+        return view('question.my-questions', [
+            'questions' => auth()->user()->questions,
+        ]);
+    }
+
     public function store(): RedirectResponse
     {
         //dd(request()->all());
@@ -28,6 +36,15 @@ class QuestionController extends Controller
             'question' => request()->question,
         ]);
 
-        return to_route('dashboard');
+        return back();
+    }
+
+    public function destroy(): RedirectResponse
+    {
+        $question = auth()->user()->questions()->findOrFail(request()->question);
+
+        $question->delete();
+
+        return back();
     }
 }

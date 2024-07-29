@@ -13,7 +13,7 @@ it("should be able to publish a question", function () {
 
     actingAs($user);
 
-    put(route('question.publish', $question))->assertRedirect();
+    put(route('questions.publish', $question))->assertRedirect();
 
     $question->refresh();
 
@@ -29,9 +29,9 @@ it('should make sure that only the person who has created the question can publi
 
     actingAs($wrongUser);
 
-    put(route('question.publish', $question))->assertForbidden();
+    put(route('questions.publish', $question))->assertForbidden();
 
     actingAs($user);
 
-    put(route('question.publish', $question))->assertRedirect();
+    put(route('questions.publish', $question))->assertRedirect();
 });
