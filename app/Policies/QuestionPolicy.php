@@ -6,6 +6,11 @@ use App\Models\{Question, User};
 
 class QuestionPolicy
 {
+    public function update(User $user, Question $question): bool
+    {
+        return $question->createdBy->is($user) && $question->draft;
+    }
+
     /**
      * Determine whether the user can view the model.
      */
