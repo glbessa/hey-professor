@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Question\{LikeController, QuestionController, UnlikeController};
+use App\Http\Controllers\Question\{LikeController, PublishController, QuestionController, UnlikeController};
 use App\Http\Controllers\{DashboardController, ProfileController};
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +27,15 @@ Route::get('/', function () {
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/question', [
-    QuestionController::class,
-    'store',
-])->name('question.store');
-Route::put('/question/like/{question}', LikeController::class)->name('question.like');
-Route::put('/question/unlike/{question}', UnlikeController::class)->name('question.unlike');
+Route::middleware('auth')->group(function () {
+    Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+    //Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+    Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    Route::put('/questions/{question}/like', LikeController::class)->name('questions.like');
+    Route::put('/questions/{question}/unlike', UnlikeController::class)->name('questions.unlike');
+    Route::put('/questions/{question}/publish', PublishController::class)->name('questions.publish');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
