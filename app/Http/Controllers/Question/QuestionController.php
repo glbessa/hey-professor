@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function index(): View
     {
-        return view('question.my-questions', [
+        return view('question.index', [
             'questions' => auth()->user()->questions,
         ]);
     }
@@ -38,6 +38,11 @@ class QuestionController extends Controller
         ]);
 
         return back();
+    }
+
+    public function edit(Question $question): void
+    {
+
     }
 
     public function destroy(Question $question): RedirectResponse
