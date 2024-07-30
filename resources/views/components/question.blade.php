@@ -1,5 +1,6 @@
 @props([
     'question',
+    'editable' => false,
     'publishable' => false,
     'deletable' => false
 ])
@@ -15,11 +16,16 @@
         </x-form>
         <x-form put :action="route('questions.unlike', $question)">
             <button>
-                <x-icons.thumb-down class="w-5 h-5 text-red-500 hover:text-red-300 cursor-pointer"/>    
+                <x-icons.thumb-down class="w-5 h-5 text-red-500 hover:text-red-300 cursor-pointer"/>
                 <span>{{ $question->votes_sum_unlike ?: 0 }}</span>
             </button>
         </x-form>
-        
+
+        @if($editable)
+            <a href="{{ route('questions.edit', $question) }}" class="ml-5">
+                <x-icons.pencil-square class="w-5 h-5 text-green-500 hover:text-green-300 cursor-pointer"/>
+            </a>
+        @endif
         @if($publishable)
             <x-form put :action="route('questions.publish', $question)" class="ml-5">
                 <button>

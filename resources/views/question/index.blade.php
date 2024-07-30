@@ -5,13 +5,13 @@
             <x-buttons.primary>Save</x-buttons.primary>
             <x-buttons.reset>Reset</x-buttons.reset>
         </x-form>
-        
+
         <div>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Drafts') }}
             @foreach($questions as $q)
                 @if($q->draft == true)
-                    <x-question :question="$q" publishable deletable/>
+                    <x-question :question="$q" editable publishable deletable/>
                 @endif
             @endforeach
         </div>
