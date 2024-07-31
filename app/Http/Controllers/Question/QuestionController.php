@@ -71,11 +71,31 @@ class QuestionController extends Controller
         return to_route('questions.index');
     }
 
-    public function destroy(Question $question): RedirectResponse
+    public function archive(Question $question): RedirectResponse
     {
         $this->authorize('destroy', $question);
 
         $question->delete();
+
+        return back();
+    }
+
+    public function restore(int $id): RedirectResponse
+    {
+        $question = Question::withTrashed()->findOrFail($id);
+
+        $this->authorize('destroy', $question);
+
+        $question->restore();
+
+        return back();
+    }
+
+    public function destroy(Question $question): RedirectResponse
+    {
+        $this->authorize('destroy', $question);
+
+        $question->forceDelete();
 
         return back();
     }
