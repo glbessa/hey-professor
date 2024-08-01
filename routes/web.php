@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\Github\{CallbackController as GithubCallbackController, RedirectController as GithubRedirectController};
+use App\Http\Controllers\Question\{LikeController, PublishController, QuestionController, UnlikeController};
+use App\Http\Controllers\{DashboardController, ProfileController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,12 +17,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //if (app()->isLocal()) {
+    //    auth()->loginUsingId(1);
+    //
+    //    return to_route('dashboard');
+    //}
+
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/login/github', GithubRedirectController::class)->name('login.github');
+Route::get('/login/github/callback', GithubCallbackController::class);
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+    //Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+    Route::get('/questions/{question}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
+    Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    Route::patch('/questions/{question}', [QuestionController::class, 'archive'])->name('questions.archive');
+    Route::patch('/questions/{question}/restore', [QuestionController::class, 'restore'])->name('questions.restore');
+
+    Route::put('/questions/{question}/like', LikeController::class)->name('questions.like');
+    Route::put('/questions/{question}/unlike', UnlikeController::class)->name('questions.unlike');
+    Route::put('/questions/{question}/publish', PublishController::class)->name('questions.publish');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,4 +52,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
