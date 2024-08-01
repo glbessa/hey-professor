@@ -39,6 +39,10 @@
                 </a>
             @endif
 
+            <a href="{{ route('login.github') }}" class="ml-4">
+                {{ __('GitHub Login') }}
+            </a>
+
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
